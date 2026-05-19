@@ -1,13 +1,25 @@
-from parser import parse_file
-from graph import Graph
+import sys
+from typing import List
+from MyParser import parse_map
+from simulator import Simulator
 
-def main():
-    parsed_data = parse_file("maps/easy/01_linear_path.txt")
 
-    graph = Graph(parsed_data)
+def main(argv: List[str]) -> int:
+    if len(argv) < 2:
+        print("Usage: python main.py <map-file>")
+        return 1
+    path = argv[1]
 
-    print(graph.get_neighbors(graph.start.name))
-    print(graph.get_connections("waypoint1", "waypoint2"))
-  
+    model = parse_map(path)
 
-main()
+    full_pipline = Simulator(model)
+    full_pipline.run()
+
+    return 0
+
+
+if __name__ == '__main__':
+    try:
+        main(sys.argv)
+    except Exception as e:
+        print("ERORR:", e)
