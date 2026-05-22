@@ -34,15 +34,6 @@ lint:
 		--disallow-untyped-defs \
 		--check-untyped-defs
 
-
-
-lint-strict:
-	$(PYTHON) -m flake8 .
-	$(PYTHON) -m mypy . --strict
-
-
-
-
 help:
 	@echo "Available targets:"
 	@echo "  install       Install dependencies"
