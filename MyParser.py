@@ -1,6 +1,5 @@
 
 from __future__ import annotations
-
 import re
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional
@@ -152,15 +151,19 @@ def parse_map(path: str) -> MapModel:
 
     except FileNotFoundError:
         raise ParseError(f"File not found: '{path}'")
-
+    if not lines:
+        raise ParseError("Map file Cannot Be Empty!")
     model: Optional[MapModel] = None
 
     for idx, raw_line in enumerate(lines, start=1):
 
-        line = raw_line.strip()
+        line = raw_line.strip().lower()
 
         if not line or line.startswith("#"):
             continue
+
+        if "#" in line:
+            line = line.split("#", 1)[0].strip()
 
         if line.startswith("nb_drones"):
 
@@ -203,6 +206,7 @@ def parse_map(path: str) -> MapModel:
             or line.startswith("start_hub")
             or line.startswith("end_hub")
         ):
+
             try:
                 kind, rest = line.split(":", 1)
             except Exception:
@@ -261,7 +265,10 @@ def parse_map(path: str) -> MapModel:
                 raise ParseError(
                     f"max_drones must be > 0 at line {idx}"
                 )
-
+            if line.startswith("start_hub"):
+                if not max_drones >= nb_drones:
+                    raise ParseError("max_drones must be >=",
+                                     f"nb_drones at line {idx}")
             zone = Zone(
                 name=name,
                 x=x,

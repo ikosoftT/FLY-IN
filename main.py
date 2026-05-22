@@ -21,5 +21,5 @@ def main(argv: List[str]) -> int:
 if __name__ == '__main__':
     try:
         main(sys.argv)
-    except Exception as e:
+    except (Exception, KeyboardInterrupt) as e:
         print("ERORR:", e)

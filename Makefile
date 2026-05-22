@@ -1,13 +1,8 @@
-# =========================
-# Fly-In Project Makefile
-# =========================
 
 PYTHON := python3
 PIP := python3 -m pip
 
-MAP ?= maps/easy/01_linear_path.txt
-
-
+MAP ?= 
 
 install:
 	$(PIP) install -r requirements.txt
