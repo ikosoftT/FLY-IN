@@ -44,7 +44,7 @@ class Simulator:
         - Colored terminal rendering
     """
 
-    def __init__(self, model: MapModel):
+    def __init__(self, model: MapModel) -> None:
         """Initialize the simulation state.
 
         Args:
